@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rnd-mysql
+spec:
+  selector:
+    matchLabels:
+      app: rnd-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rnd-mysql
+    spec:
+      containers:
+        - image: lukmanbap/rnd-mysql:latest
+          name: rnd-mysql
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "600Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1200Mi"
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: ROOT_PASSWORD
+                  name: rnd-mysql-secret
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_USER
+                  name: rnd-mysql-secret
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: rnd-mysql-secret
+            - name: TZ
+              value: Asia/Jakarta
+          ports:
+            - containerPort: 3306
+              name: mysql
+            - containerPort: 33060
+              name: mysql-x-port
+          volumeMounts:
+            - name: rnd-mysql-volume
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: rnd-mysql-volume
+          persistentVolumeClaim:
+            claimName: rnd-mysql-pvc

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rnd-mysql-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: default
+    name: rnd-mysql-pvc
+  gcePersistentDisk:
+    pdName: rnd-mysql-disk
+    fsType: ext4
