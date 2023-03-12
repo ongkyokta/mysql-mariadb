@@ -1,3 +1,3 @@
 #!/bin/bash
-echo "docker push lukmanbap/mysql:latest"
-docker push lukmanbap/mysql:latest
+echo "docker push  <url-registry>/mysql:latest"
+docker push  <url-registry>/mysql:latest

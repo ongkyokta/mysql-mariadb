@@ -14,7 +14,7 @@ spec:
         app: rnd-mysql
     spec:
       containers:
-        - image: lukmanbap/rnd-mysql:latest
+        - image:  <url-registry>/rnd-mysql:latest
           name: rnd-mysql
           resources:
             requests:
